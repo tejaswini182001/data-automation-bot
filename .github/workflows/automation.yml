@@ -1,0 +1,30 @@
+name: Daily Data Automation
+
+on:
+  schedule:
+    - cron: "0 3 * * *"   # Runs at 8:30 AM India time (IST)
+  workflow_dispatch:        # Allows manual run
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$SERVICE_ACCOUNT_JSON" > service_account.json
+          python automation.py
