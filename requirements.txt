@@ -1,0 +1,7 @@
+streamlit
+requests
+pandas
+feedparser
+gspread
+google-auth
+google-auth-oauthlib
